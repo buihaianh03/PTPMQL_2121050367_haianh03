@@ -1,5 +1,3 @@
-name: Deploy ASP.NET Core MVC
-
 name: Deploy .NET 10 MVC to MonsterASP.net
 
 on:
