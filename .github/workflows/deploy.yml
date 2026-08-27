@@ -21,7 +21,7 @@ jobs:
 
       # 2. Đóng gói ứng dụng
       - name: Publish project
-        run: dotnet publish **/*.csproj -c Release -o ./publish
+         run: dotnet publish **/*.csproj -c Release -o ./publish
 
       # 3. TẮT SERVER: Tạo và upload app_offline.htm bằng curl (Không làm hỏng file sync state)
       - name: ⛔ Stop Server (Upload app_offline.htm)
