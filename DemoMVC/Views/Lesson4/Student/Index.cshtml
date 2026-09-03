@@ -1,0 +1,41 @@
+@model DemoMVC.Models.Student
+
+<h1>@ViewBag.Title</h1>
+
+<h3>@ViewData["Message"]</h3>
+
+<form method="post">
+
+    <div>
+        <label>Full Name:</label>
+        <input type="text" name="FullName" />
+    </div>
+
+    <br />
+
+    <div>
+        <label>Address:</label>
+        <input type="text" name="Address" />
+    </div>
+
+    <br />
+
+    <div>
+        <label>University:</label>
+        <input type="text" name="University" />
+    </div>
+
+    <br />
+
+    <button type="submit">Submit</button>
+
+</form>
+
+@if (ViewBag.FullName != null)
+{
+    <h3>Thông tin đã nhập:</h3>
+
+    <p>Full Name: @ViewBag.FullName</p>
+    <p>Address: @ViewBag.Address</p>
+    <p>University: @ViewBag.University</p>
+}
