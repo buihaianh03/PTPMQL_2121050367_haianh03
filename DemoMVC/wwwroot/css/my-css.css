@@ -1,0 +1,58 @@
+/* Thiết lập chung */
+body {
+    background-color: #f5f7fa;
+    color: #212529;
+}
+
+/* Thanh điều hướng */
+.navbar-brand {
+    letter-spacing: 0.5px;
+}
+
+.navbar .nav-link {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+    margin-left: 10px;
+    transition: 0.2s;
+}
+
+.navbar .nav-link:hover {
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+/* Nội dung chính */
+.main-content {
+    min-height: calc(100vh - 155px);
+}
+
+/* Banner trang chủ */
+.home-banner {
+    padding: 60px 30px;
+    color: white;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #0d6efd, #052c65);
+}
+
+/* Thẻ chức năng */
+.feature-card {
+    border: none;
+    border-radius: 14px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Footer */
+.footer-custom {
+    padding: 20px 0;
+    background-color: #212529;
+    color: #ffffff;
+}
+
+.footer-custom small {
+    color: #adb5bd;
+}
