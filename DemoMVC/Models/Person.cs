@@ -7,8 +7,14 @@ namespace DemoMVC.Models
         [Key]
         public int Id { get; set; }
 
-        public string Name { get; set; }
 
-        public int Age { get; set; }
+        [Required(ErrorMessage = "Vui lòng nhập họ tên")]
+        [StringLength(50, ErrorMessage = "Họ tên tối đa 50 ký tự")]
+        public string FullName { get; set; }
+
+
+        [Required(ErrorMessage = "Vui lòng nhập địa chỉ")]
+        [StringLength(100, ErrorMessage = "Địa chỉ tối đa 100 ký tự")]
+        public string Address { get; set; }
     }
 }

@@ -14,22 +14,19 @@ namespace DemoMVC.Controllers
             _context = context;
         }
 
-
         public async Task<IActionResult> Index()
         {
             return View(await _context.Persons.ToListAsync());
         }
-
 
         public IActionResult Create()
         {
             return View();
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Person person)
+        public async Task<IActionResult> Create([Bind("Id,FullName,Address")] Person person)
         {
             if (ModelState.IsValid)
             {
@@ -40,7 +37,7 @@ namespace DemoMVC.Controllers
 
             return View(person);
         }
-       
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -58,10 +55,9 @@ namespace DemoMVC.Controllers
             return View(person);
         }
 
-    
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Person person)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,Address")] Person person)
         {
             if (id != person.Id)
             {
@@ -78,7 +74,6 @@ namespace DemoMVC.Controllers
 
             return View(person);
         }
-
 
         public async Task<IActionResult> Delete(int? id)
         {
@@ -112,6 +107,11 @@ namespace DemoMVC.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
+        }
+
+        private bool PersonExists(int id)
+        {
+            return _context.Persons.Any(e => e.Id == id);
         }
     }
 }

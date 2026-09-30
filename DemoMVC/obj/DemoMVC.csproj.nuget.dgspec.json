@@ -69,6 +69,14 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[10.0.2, )"
+            },
+            "NuGet.Packaging": {
+              "target": "Package",
+              "version": "[6.14.0, )"
+            },
+            "NuGet.Protocol": {
+              "target": "Package",
+              "version": "[6.14.0, )"
             }
           },
           "imports": [
