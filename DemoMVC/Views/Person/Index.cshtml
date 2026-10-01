@@ -1,38 +1,21 @@
 @model IEnumerable<DemoMVC.Models.Person>
-
-<h1>Person List</h1>
-
-<a asp-action="Create" class="btn btn-primary">
-    Create New
-</a>
-
-<table class="table">
-
-<tr>
-    <th>Id</th>
-    <th>Full Name</th>
-    <th>Address</th>
-    <th></th>
-</tr>
-
-
-@foreach(var item in Model)
-{
-    <tr>
-        <td>@item.Id</td>
-        <td>@item.FullName</td>
-        <td>@item.Address</td>
-
-        <td>
-            <a asp-action="Edit" asp-route-id="@item.Id">
-                Edit
-            </a>
-
-            <a asp-action="Delete" asp-route-id="@item.Id">
-                Delete
-            </a>
-        </td>
-    </tr>
-}
-
+@{ ViewData["Title"] = "Person List"; }
+<h1>@ViewData["Title"]</h1>
+<a asp-action="Create" class="btn btn-primary mb-3">Create New</a>
+<div class="table-responsive">
+<table class="table table-striped">
+    <thead><tr><th>@Html.DisplayNameFor(model => model.Id)</th><th>@Html.DisplayNameFor(model => model.FullName)</th><th>@Html.DisplayNameFor(model => model.Address)</th><th>@Html.DisplayNameFor(model => model.Email)</th><th>Actions</th></tr></thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr><td>@item.Id</td><td>@item.FullName</td><td>@item.Address</td><td>@item.Email</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
 </table>
+</div>

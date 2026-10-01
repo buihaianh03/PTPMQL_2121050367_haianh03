@@ -1,8 +1,8 @@
-@model DemoMVC.Models.Person
-@{ ViewData["Title"] = "Create Person"; }
+@model DemoMVC.Models.Employee
+@{ ViewData["Title"] = "Edit Employee"; }
 <h1>@ViewData["Title"]</h1>
-<form asp-action="Create" method="post">
-
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="mb-3">
         <label asp-for="FullName" class="form-label"></label>
@@ -18,6 +18,16 @@
         <label asp-for="Email" class="form-label"></label>
         <input asp-for="Email" class="form-control" />
         <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="EmployeeId" class="form-label"></label>
+        <input asp-for="EmployeeId" class="form-control" />
+        <span asp-validation-for="EmployeeId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Age" class="form-label"></label>
+        <input asp-for="Age" class="form-control" />
+        <span asp-validation-for="Age" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">Save</button>
     <a asp-action="Index" class="btn btn-secondary">Back to list</a>

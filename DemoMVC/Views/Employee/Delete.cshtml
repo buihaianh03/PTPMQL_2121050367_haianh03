@@ -1,5 +1,5 @@
-@model DemoMVC.Models.Person
-@{ ViewData["Title"] = "Delete Person"; }
+@model DemoMVC.Models.Employee
+@{ ViewData["Title"] = "Delete Employee"; }
 <h1>@ViewData["Title"]</h1>
 <p>Are you sure you want to delete this record?</p>
 <dl class="row">
@@ -7,6 +7,8 @@
 <dt class="col-sm-3">@Html.DisplayNameFor(model => model.FullName)</dt><dd class="col-sm-9">@Html.DisplayFor(model => model.FullName)</dd>
 <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Address)</dt><dd class="col-sm-9">@Html.DisplayFor(model => model.Address)</dd>
 <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Email)</dt><dd class="col-sm-9">@Html.DisplayFor(model => model.Email)</dd>
+<dt class="col-sm-3">@Html.DisplayNameFor(model => model.EmployeeId)</dt><dd class="col-sm-9">@Html.DisplayFor(model => model.EmployeeId)</dd>
+<dt class="col-sm-3">@Html.DisplayNameFor(model => model.Age)</dt><dd class="col-sm-9">@Html.DisplayFor(model => model.Age)</dd>
 </dl>
 <form asp-action="Delete" method="post">
     <input type="hidden" asp-for="Id" />
