@@ -5,11 +5,11 @@ using DemoMVC.Models;
 
 namespace DemoMVC.Controllers
 {
-    public class PersonController : Controller
+    public class EmployeeController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public PersonController(ApplicationDbContext context) => _context = context;
-        private IQueryable<Person> Records => _context.Persons.Where(p => EF.Property<string>(p, "Discriminator") == "Person");
+        public EmployeeController(ApplicationDbContext context) => _context = context;
+        private IQueryable<Employee> Records => _context.Employees;
 
         public async Task<IActionResult> Index() => View(await Records.AsNoTracking().ToListAsync());
 
@@ -24,10 +24,10 @@ namespace DemoMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FullName,Address,Email")] Person model)
+        public async Task<IActionResult> Create([Bind("FullName,Address,Email,EmployeeId,Age")] Employee model)
         {
             if (!ModelState.IsValid) return View(model);
-            _context.Persons.Add(model);
+            _context.Employees.Add(model);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -41,7 +41,7 @@ namespace DemoMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,Address,Email")] Person model)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,Address,Email,EmployeeId,Age")] Employee model)
         {
             if (id != model.Id) return NotFound();
             var existing = await Records.FirstOrDefaultAsync(p => p.Id == id);
@@ -50,6 +50,8 @@ namespace DemoMVC.Controllers
                 existing.FullName = model.FullName;
                 existing.Address = model.Address;
                 existing.Email = model.Email;
+                existing.EmployeeId = model.EmployeeId;
+                existing.Age = model.Age;
             try
             {
                 await _context.SaveChangesAsync();
@@ -75,7 +77,7 @@ namespace DemoMVC.Controllers
         {
             var model = await Records.FirstOrDefaultAsync(p => p.Id == id);
             if (model == null) return NotFound();
-            _context.Persons.Remove(model);
+            _context.Employees.Remove(model);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
