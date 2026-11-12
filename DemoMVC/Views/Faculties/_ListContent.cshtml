@@ -1,0 +1,10 @@
+@model DemoMVC.ViewModels.PaginatedListViewModel<DemoMVC.ViewModels.FacultyDetailsViewModel>
+
+<div data-list-fragment>
+    <table>
+        <partial name="_Rows" model="Model.Items" />
+    </table>
+    <div data-ajax-pagination data-page="@Model.Pagination.Page" data-page-size="@Model.Pagination.PageSize">
+        <partial name="_Pagination" model="Model.Pagination" />
+    </div>
+</div>

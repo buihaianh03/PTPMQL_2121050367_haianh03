@@ -23,20 +23,23 @@ public class StudentRecordsController : Controller
         _studentService = studentService;
     }
 
-    public async Task<IActionResult> Index(string? search)
+    public async Task<IActionResult> Index(string? search = null, int page = 1, int pageSize = 10)
     {
-        var query = _context.Students.AsNoTracking()
-            .Include(x => x.Major)
-            .Include(x => x.Faculty)
-            .AsQueryable();
-        if (!string.IsNullOrWhiteSpace(search))
+        var students = _context.Students.AsNoTracking().AsQueryable();
+        search = ListSearch.Normalize(search);
+        if (search is not null)
         {
-            var term = search.Trim();
-            query = query.Where(x => x.MaSV.Contains(term) || x.FullName.Contains(term));
+            var pattern = ListSearch.ContainsPattern(SqliteSearchFunctions.Normalize(search));
+            students = students.Where(x =>
+                EF.Functions.Like(SqliteSearchFunctions.NormalizeForQuery(x.MaSV), pattern, "\\")
+                || EF.Functions.Like(SqliteSearchFunctions.NormalizeForQuery(x.FullName), pattern, "\\")
+                || EF.Functions.Like(SqliteSearchFunctions.NormalizeForQuery(x.Address), pattern, "\\")
+                || EF.Functions.Like(SqliteSearchFunctions.NormalizeForQuery(x.Major.Name), pattern, "\\")
+                || EF.Functions.Like(SqliteSearchFunctions.NormalizeForQuery(x.Faculty.Name), pattern, "\\")
+                || EF.Functions.Like(SqliteSearchFunctions.NormalizeForQuery(x.TrainingSystem.Name), pattern, "\\"));
         }
 
-        ViewData["Search"] = search;
-        var students = await query
+        var result = await PaginatedListViewModel<StudentListItemViewModel>.CreateAsync(students
             .OrderBy(x => x.MaSV)
             .Select(x => new StudentListItemViewModel
             {
@@ -46,9 +49,19 @@ public class StudentRecordsController : Controller
                 MajorName = x.Major.Name,
                 FacultyName = x.Faculty.Name,
                 AdmissionYear = x.AdmissionYear
-            })
-            .ToListAsync();
-        return IsRowsRequest ? PartialView("_Rows", students) : View(students);
+            }), search, page, pageSize);
+        if (!IsListPartialRequest
+            && (page != result.Pagination.Page || pageSize != result.Pagination.PageSize))
+        {
+            return RedirectToAction(nameof(Index), new
+            {
+                search = result.Pagination.SearchTerm,
+                page = result.Pagination.Page,
+                pageSize = result.Pagination.PageSize
+            });
+        }
+
+        return IsListPartialRequest ? PartialView("_ListContent", result) : View(result);
     }
 
     public async Task<IActionResult> Create()
@@ -306,9 +319,9 @@ public class StudentRecordsController : Controller
         ControllerContext.HttpContext?.Request.Headers["X-Requested-With"].ToString(),
         "XMLHttpRequest",
         StringComparison.Ordinal);
-    private bool IsRowsRequest => string.Equals(
+    private bool IsListPartialRequest => string.Equals(
         ControllerContext.HttpContext?.Request.Query["partial"].ToString(),
-        "rows",
+        "list",
         StringComparison.Ordinal);
 
     private IActionResult AjaxView(string viewName, StudentFormViewModel model)

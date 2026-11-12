@@ -299,6 +299,8 @@ C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\DemoMVC\obj\Debug\net
 C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\DemoMVC\obj\Debug\net10.0\compressed\uoog3p6aoc-{0}-ucywyq1tym-ucywyq1tym.gz
 C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\DemoMVC\obj\Debug\net10.0\compressed\3xqpwvxjmo-{0}-b9sayid5wm-b9sayid5wm.gz
 C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\DemoMVC\obj\Debug\net10.0\compressed\wxksowlaa2-{0}-61n19gt1b8-61n19gt1b8.gz
+C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\DemoMVC\obj\Debug\net10.0\compressed\i7pifeklos-{0}-xeshjd43ew-xeshjd43ew.gz
+C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\DemoMVC\obj\Debug\net10.0\compressed\x78xum88yo-{0}-33m1hkznq9-33m1hkznq9.gz
 C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\DemoMVC\obj\Debug\net10.0\compressed\ffshl3hb68-{0}-t1cqhe9u97-t1cqhe9u97.gz
 C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\DemoMVC\obj\Debug\net10.0\compressed\b0p8xblyi8-{0}-c2jlpeoesf-c2jlpeoesf.gz
 C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\DemoMVC\obj\Debug\net10.0\compressed\dy2t4vgcaj-{0}-sejl45xvog-sejl45xvog.gz
@@ -371,5 +373,3 @@ C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\DemoMVC\obj\Debug\net
 C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\DemoMVC\obj\Debug\net10.0\DemoMVC.pdb
 C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\DemoMVC\obj\Debug\net10.0\DemoMVC.genruntimeconfig.cache
 C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\DemoMVC\obj\Debug\net10.0\ref\DemoMVC.dll
-C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\DemoMVC\obj\Debug\net10.0\compressed\i7pifeklos-{0}-cdrtahh799-cdrtahh799.gz
-C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\DemoMVC\obj\Debug\net10.0\compressed\x78xum88yo-{0}-33m1hkznq9-33m1hkznq9.gz

@@ -78,12 +78,13 @@
 
     async function refreshRows() {
         const currentRows = document.querySelector("tbody[data-ajax-rows]");
-        if (!currentRows) {
+        const currentPagination = document.querySelector("[data-ajax-pagination]");
+        if (!currentRows || !currentPagination) {
             return;
         }
 
         const url = new URL(window.location.href);
-        url.searchParams.set("partial", "rows");
+        url.searchParams.set("partial", "list");
         const response = await fetch(url, {
             headers: { "X-Requested-With": "XMLHttpRequest" }
         });
@@ -93,12 +94,21 @@
 
         const template = document.createElement("template");
         template.innerHTML = (await response.text()).trim();
-        const updatedRows = template.content.querySelector("tbody[data-ajax-rows]");
-        if (!updatedRows) {
-            throw new Error("Máy chủ không trả về danh sách dữ liệu hợp lệ.");
+        const fragment = template.content.querySelector("[data-list-fragment]");
+        const updatedRows = fragment?.querySelector("tbody[data-ajax-rows]");
+        const updatedPagination = fragment?.querySelector("[data-ajax-pagination]");
+        if (!updatedRows || !updatedPagination) {
+            throw new Error("Máy chủ không trả về danh sách hoặc phân trang hợp lệ.");
         }
 
         currentRows.replaceWith(updatedRows);
+        currentPagination.replaceWith(updatedPagination);
+
+        const currentUrl = new URL(window.location.href);
+        currentUrl.searchParams.set("page", updatedPagination.dataset.page);
+        currentUrl.searchParams.set("pageSize", updatedPagination.dataset.pageSize);
+        currentUrl.searchParams.delete("partial");
+        window.history.replaceState(null, "", currentUrl);
     }
 
     document.addEventListener("click", (event) => {

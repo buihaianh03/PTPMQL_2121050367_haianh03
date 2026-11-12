@@ -18,25 +18,38 @@ public class FacultiesController : Controller
         _logger = logger;
     }
 
-    public async Task<IActionResult> Index(string? search)
+    public async Task<IActionResult> Index(string? search = null, int page = 1, int pageSize = 10)
     {
         var faculties = _context.Faculties.AsNoTracking().AsQueryable();
-        if (!string.IsNullOrWhiteSpace(search))
+        search = ListSearch.Normalize(search);
+        if (search is not null)
         {
-            var term = search.Trim();
-            faculties = faculties.Where(x => x.Name.Contains(term));
+            var pattern = ListSearch.ContainsPattern(SqliteSearchFunctions.Normalize(search));
+            var hasFacultyId = int.TryParse(search, out var facultyId);
+            faculties = faculties.Where(x =>
+                EF.Functions.Like(SqliteSearchFunctions.NormalizeForQuery(x.Name), pattern, "\\")
+                || (hasFacultyId && x.MaKhoa == facultyId));
         }
 
-        ViewData["Search"] = search;
-        var result = await faculties
+        var result = await PaginatedListViewModel<FacultyDetailsViewModel>.CreateAsync(faculties
             .OrderBy(x => x.Name)
             .Select(x => new FacultyDetailsViewModel
             {
                 MaKhoa = x.MaKhoa,
                 Name = x.Name
-            })
-            .ToListAsync();
-        return IsRowsRequest ? PartialView("_Rows", result) : View(result);
+            }), search, page, pageSize);
+        if (!IsListPartialRequest
+            && (page != result.Pagination.Page || pageSize != result.Pagination.PageSize))
+        {
+            return RedirectToAction(nameof(Index), new
+            {
+                search = result.Pagination.SearchTerm,
+                page = result.Pagination.Page,
+                pageSize = result.Pagination.PageSize
+            });
+        }
+
+        return IsListPartialRequest ? PartialView("_ListContent", result) : View(result);
     }
 
     public IActionResult Create() => IsAjaxRequest ? PartialView(new Faculty()) : View(new Faculty());
@@ -222,9 +235,9 @@ public class FacultiesController : Controller
         ControllerContext.HttpContext?.Request.Headers["X-Requested-With"].ToString(),
         "XMLHttpRequest",
         StringComparison.Ordinal);
-    private bool IsRowsRequest => string.Equals(
+    private bool IsListPartialRequest => string.Equals(
         ControllerContext.HttpContext?.Request.Query["partial"].ToString(),
-        "rows",
+        "list",
         StringComparison.Ordinal);
 
     private IActionResult AjaxView(string viewName, Faculty model)

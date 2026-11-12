@@ -1,0 +1,87 @@
+@model DemoMVC.ViewModels.PaginationViewModel
+
+@functions {
+    private string PageUrl(int page) =>
+        Url.Action("Index", new
+        {
+            search = Model.SearchTerm,
+            page,
+            pageSize = Model.PageSize
+        }) ?? "#";
+}
+
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 mb-2">
+    @if (Model.TotalCount == 0)
+    {
+        <p class="text-muted mb-0" aria-live="polite">
+            Đang hiển thị bản ghi 0 đến 0 trên tổng số 0 bản ghi. Không có bản ghi nào.
+        </p>
+    }
+    else
+    {
+        <p class="text-muted mb-0" aria-live="polite">
+            Đang hiển thị bản ghi @Model.StartRecord đến @Model.EndRecord trên tổng số @Model.TotalCount bản ghi.
+        </p>
+    }
+
+    @if (Model.TotalPages > 1)
+    {
+        <nav aria-label="Điều hướng trang danh sách">
+            <ul class="pagination pagination-sm flex-wrap justify-content-center mb-0">
+                <li class="page-item @(Model.Page == 1 ? "disabled" : "")">
+                    @if (Model.Page == 1)
+                    {
+                        <span class="page-link">Trang đầu</span>
+                    }
+                    else
+                    {
+                        <a class="page-link" href="@PageUrl(1)">Trang đầu</a>
+                    }
+                </li>
+                <li class="page-item @(Model.Page == 1 ? "disabled" : "")">
+                    @if (Model.Page == 1)
+                    {
+                        <span class="page-link">Trang trước</span>
+                    }
+                    else
+                    {
+                        <a class="page-link" href="@PageUrl(Model.Page - 1)">Trang trước</a>
+                    }
+                </li>
+                @foreach (var pageNumber in Model.VisiblePages)
+                {
+                    <li class="page-item @(pageNumber == Model.Page ? "active" : "")">
+                        @if (pageNumber == Model.Page)
+                        {
+                            <span class="page-link" aria-current="page">@pageNumber</span>
+                        }
+                        else
+                        {
+                            <a class="page-link" href="@PageUrl(pageNumber)">@pageNumber</a>
+                        }
+                    </li>
+                }
+                <li class="page-item @(Model.Page == Model.TotalPages ? "disabled" : "")">
+                    @if (Model.Page == Model.TotalPages)
+                    {
+                        <span class="page-link">Trang tiếp</span>
+                    }
+                    else
+                    {
+                        <a class="page-link" href="@PageUrl(Model.Page + 1)">Trang tiếp</a>
+                    }
+                </li>
+                <li class="page-item @(Model.Page == Model.TotalPages ? "disabled" : "")">
+                    @if (Model.Page == Model.TotalPages)
+                    {
+                        <span class="page-link">Trang cuối</span>
+                    }
+                    else
+                    {
+                        <a class="page-link" href="@PageUrl(Model.TotalPages)">Trang cuối</a>
+                    }
+                </li>
+            </ul>
+        </nav>
+    }
+</div>

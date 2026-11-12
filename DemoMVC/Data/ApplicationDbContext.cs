@@ -1,3 +1,4 @@
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using DemoMVC.Models;
 
@@ -9,7 +10,13 @@ namespace DemoMVC.Data
             DbContextOptions<ApplicationDbContext> options
         ) : base(options)
         {
-
+            if (Database.GetDbConnection() is SqliteConnection connection)
+            {
+                connection.CreateFunction<string?, string?>(
+                    "normalize_search",
+                    SqliteSearchFunctions.NormalizeNullable,
+                    isDeterministic: true);
+            }
         }
 
         public DbSet<Person> Persons => Set<Person>();
@@ -23,6 +30,11 @@ namespace DemoMVC.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.HasDbFunction(
+                    typeof(SqliteSearchFunctions).GetMethod(nameof(SqliteSearchFunctions.NormalizeForQuery))!)
+                .HasName("normalize_search")
+                .IsBuiltIn();
 
             modelBuilder.Entity<Faculty>(entity =>
             {

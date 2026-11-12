@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DemoMVC.Data;
 using DemoMVC.Models;
+using DemoMVC.ViewModels;
 
 namespace DemoMVC.Controllers
 {
@@ -14,12 +15,37 @@ namespace DemoMVC.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? search = null, int page = 1, int pageSize = 10)
         {
-            var people = await _context.Persons.AsNoTracking().OrderBy(x => x.Id).ToListAsync();
-            return IsRowsRequest
-                ? PartialView("_Rows", people)
-                : View(people);
+            var people = _context.Persons.AsNoTracking().AsQueryable();
+            search = ListSearch.Normalize(search);
+            if (search is not null)
+            {
+                var pattern = ListSearch.ContainsPattern(SqliteSearchFunctions.Normalize(search));
+                var hasPersonId = int.TryParse(search, out var personId);
+                people = people.Where(x =>
+                    EF.Functions.Like(SqliteSearchFunctions.NormalizeForQuery(x.FullName), pattern, "\\")
+                    || EF.Functions.Like(SqliteSearchFunctions.NormalizeForQuery(x.Address), pattern, "\\")
+                    || (hasPersonId && x.Id == personId));
+            }
+
+            var result = await PaginatedListViewModel<Person>.CreateAsync(
+                people.OrderBy(x => x.Id),
+                search,
+                page,
+                pageSize);
+            if (!IsListPartialRequest
+                && (page != result.Pagination.Page || pageSize != result.Pagination.PageSize))
+            {
+                return RedirectToAction(nameof(Index), new
+                {
+                    search = result.Pagination.SearchTerm,
+                    page = result.Pagination.Page,
+                    pageSize = result.Pagination.PageSize
+                });
+            }
+
+            return IsListPartialRequest ? PartialView("_ListContent", result) : View(result);
         }
 
         public IActionResult Create()
@@ -150,9 +176,9 @@ namespace DemoMVC.Controllers
             ControllerContext.HttpContext?.Request.Headers["X-Requested-With"].ToString(),
             "XMLHttpRequest",
             StringComparison.Ordinal);
-        private bool IsRowsRequest => string.Equals(
+        private bool IsListPartialRequest => string.Equals(
             ControllerContext.HttpContext?.Request.Query["partial"].ToString(),
-            "rows",
+            "list",
             StringComparison.Ordinal);
 
         private IActionResult AjaxView(string viewName, Person person)

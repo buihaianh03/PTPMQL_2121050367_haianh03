@@ -1,6 +1,10 @@
 @model IEnumerable<DemoMVC.ViewModels.FacultyDetailsViewModel>
 
 <tbody data-ajax-rows>
+@if (!Model.Any())
+{
+    <tr><td colspan="3" class="text-center text-muted py-4">Không tìm thấy khoa phù hợp.</td></tr>
+}
 @foreach (var faculty in Model)
 {
     <tr>

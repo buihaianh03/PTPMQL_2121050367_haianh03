@@ -3,6 +3,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using DemoMVC.Data;
 using DemoMVC.Models;
+using DemoMVC.ViewModels;
 
 namespace DemoMVC.Controllers;
 
@@ -15,20 +16,38 @@ public class MajorsController : Controller
         _context = context;
     }
 
-    public async Task<IActionResult> Index(string? search)
+    public async Task<IActionResult> Index(string? search = null, int page = 1, int pageSize = 10)
     {
         var majors = _context.Majors.AsNoTracking().AsQueryable();
-        if (!string.IsNullOrWhiteSpace(search))
+        search = ListSearch.Normalize(search);
+        if (search is not null)
         {
-            var term = search.Trim();
-            majors = majors.Where(x => x.Name.Contains(term)
-                || (x.StudentCode != null && x.StudentCode.Contains(term))
-                || (x.AdmissionCode != null && x.AdmissionCode.Contains(term)));
+            var pattern = ListSearch.ContainsPattern(SqliteSearchFunctions.Normalize(search));
+            majors = majors.Where(x =>
+                EF.Functions.Like(SqliteSearchFunctions.NormalizeForQuery(x.Name), pattern, "\\")
+                || (x.StudentCode != null && EF.Functions.Like(SqliteSearchFunctions.NormalizeForQuery(x.StudentCode), pattern, "\\"))
+                || (x.AdmissionCode != null && EF.Functions.Like(SqliteSearchFunctions.NormalizeForQuery(x.AdmissionCode), pattern, "\\"))
+                || x.Students.Any(student =>
+                    EF.Functions.Like(SqliteSearchFunctions.NormalizeForQuery(student.Faculty.Name), pattern, "\\")));
         }
 
-        ViewData["Search"] = search;
-        var result = await majors.OrderBy(x => x.Name).ToListAsync();
-        return IsRowsRequest ? PartialView("_Rows", result) : View(result);
+        var result = await PaginatedListViewModel<Major>.CreateAsync(
+            majors.OrderBy(x => x.Name),
+            search,
+            page,
+            pageSize);
+        if (!IsListPartialRequest
+            && (page != result.Pagination.Page || pageSize != result.Pagination.PageSize))
+        {
+            return RedirectToAction(nameof(Index), new
+            {
+                search = result.Pagination.SearchTerm,
+                page = result.Pagination.Page,
+                pageSize = result.Pagination.PageSize
+            });
+        }
+
+        return IsListPartialRequest ? PartialView("_ListContent", result) : View(result);
     }
 
     public IActionResult Create() => IsAjaxRequest ? PartialView(new Major()) : View(new Major());
@@ -203,9 +222,9 @@ public class MajorsController : Controller
         ControllerContext.HttpContext?.Request.Headers["X-Requested-With"].ToString(),
         "XMLHttpRequest",
         StringComparison.Ordinal);
-    private bool IsRowsRequest => string.Equals(
+    private bool IsListPartialRequest => string.Equals(
         ControllerContext.HttpContext?.Request.Query["partial"].ToString(),
-        "rows",
+        "list",
         StringComparison.Ordinal);
 
     private IActionResult AjaxView(string viewName, Major model)

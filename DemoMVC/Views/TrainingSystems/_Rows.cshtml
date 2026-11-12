@@ -1,6 +1,10 @@
 @model IEnumerable<DemoMVC.Models.TrainingSystem>
 
 <tbody data-ajax-rows>
+@if (!Model.Any())
+{
+    <tr><td colspan="3" class="text-center text-muted py-4">Không tìm thấy hệ đào tạo phù hợp.</td></tr>
+}
 @foreach (var system in Model)
 {
     <tr>

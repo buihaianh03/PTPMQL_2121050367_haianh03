@@ -1,4 +1,4 @@
-@model IEnumerable<DemoMVC.ViewModels.StudentListItemViewModel>
+@model DemoMVC.ViewModels.PaginatedListViewModel<DemoMVC.ViewModels.StudentListItemViewModel>
 
 @{
     ViewData["Title"] = "Quản lý sinh viên";
@@ -19,12 +19,20 @@
 }
 
 <form asp-action="Index" method="get" class="row g-2 mb-3">
-    <div class="col-sm-8">
-        <input name="search" value="@ViewData["Search"]" class="form-control" placeholder="Tìm theo mã sinh viên hoặc họ tên" />
+    <div class="col-sm-6">
+        <input name="search" value="@Model.Pagination.SearchTerm" class="form-control" placeholder="Tìm mã, họ tên, địa chỉ, khoa, ngành hoặc hệ đào tạo" />
+    </div>
+    <div class="col-sm-2">
+        <select name="pageSize" class="form-select" aria-label="Số bản ghi mỗi trang">
+            @foreach (var size in DemoMVC.ViewModels.PaginationViewModel.PageSizeOptions)
+            {
+                <option value="@size" selected="@(size == Model.Pagination.PageSize ? "selected" : null)">@size bản ghi/trang</option>
+            }
+        </select>
     </div>
     <div class="col-auto">
         <button type="submit" class="btn btn-outline-primary">Tìm kiếm</button>
-        <a asp-action="Index" class="btn btn-outline-secondary">Xóa lọc</a>
+        <a asp-action="Index" class="btn btn-outline-secondary">Làm mới</a>
     </div>
 </form>
 
@@ -40,6 +48,9 @@
                 <th></th>
             </tr>
         </thead>
-        <partial name="_Rows" model="Model" />
+        <partial name="_Rows" model="Model.Items" />
     </table>
+</div>
+<div id="pagination-container" data-ajax-pagination data-page="@Model.Pagination.Page" data-page-size="@Model.Pagination.PageSize">
+    <partial name="_Pagination" model="Model.Pagination" />
 </div>
