@@ -1,0 +1,21 @@
+@model DemoMVC.ViewModels.StudentListItemViewModel
+
+@{
+    ViewData["Title"] = "Xóa sinh viên";
+}
+
+<h1>Xóa sinh viên</h1>
+<div class="alert alert-warning">Mã đã cấp sẽ được giữ trong lịch sử và không được tái sử dụng.</div>
+<dl class="row">
+    <dt class="col-sm-3">Mã sinh viên</dt>
+    <dd class="col-sm-9">@Model.MaSV</dd>
+    <dt class="col-sm-3">Họ tên</dt>
+    <dd class="col-sm-9">@Model.FullName</dd>
+    <dt class="col-sm-3">Khoa</dt>
+    <dd class="col-sm-9">@Model.FacultyName</dd>
+</dl>
+<form asp-action="Delete" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <button type="submit" class="btn btn-danger">Xác nhận xóa</button>
+    <a asp-action="Index" class="btn btn-outline-secondary">Hủy</a>
+</form>

@@ -372,3 +372,4 @@ C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\DemoMVC\obj\Debug\net
 C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\DemoMVC\obj\Debug\net10.0\DemoMVC.pdb
 C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\DemoMVC\obj\Debug\net10.0\DemoMVC.genruntimeconfig.cache
 C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\DemoMVC\obj\Debug\net10.0\ref\DemoMVC.dll
+C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\DemoMVC\obj\Debug\net10.0\compressed\x78xum88yo-{0}-70svmlrm9x-70svmlrm9x.gz

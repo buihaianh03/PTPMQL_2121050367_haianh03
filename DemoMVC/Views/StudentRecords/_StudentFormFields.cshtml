@@ -1,0 +1,55 @@
+@model DemoMVC.ViewModels.StudentFormViewModel
+
+<div class="mb-3">
+    <label asp-for="MaSV" class="form-label"></label>
+    <div class="input-group">
+        <input asp-for="MaSV" class="form-control" readonly data-original-code="@Model.MaSV" />
+        <button type="button" class="btn btn-outline-primary" id="preview-code">Tạo mã</button>
+    </div>
+    <span asp-validation-for="MaSV" class="text-danger"></span>
+    <div id="code-message" class="form-text" aria-live="polite">
+        Mã được dự kiến trước khi lưu và cấp chính thức trong transaction khi lưu.
+    </div>
+</div>
+
+<div class="mb-3">
+    <label asp-for="FullName" class="form-label"></label>
+    <input asp-for="FullName" class="form-control" />
+    <span asp-validation-for="FullName" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="Address" class="form-label"></label>
+    <input asp-for="Address" class="form-control" />
+    <span asp-validation-for="Address" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="AdmissionYear" class="form-label"></label>
+    <input asp-for="AdmissionYear" class="form-control" min="2000" max="2099" />
+    <span asp-validation-for="AdmissionYear" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="TrainingSystemId" class="form-label"></label>
+    <select asp-for="TrainingSystemId" asp-items="Model.TrainingSystems" class="form-select">
+        <option value="">-- Chọn hệ đào tạo --</option>
+    </select>
+    <span asp-validation-for="TrainingSystemId" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="MajorId" class="form-label"></label>
+    <select asp-for="MajorId" asp-items="Model.Majors" class="form-select">
+        <option value="">-- Chọn ngành học --</option>
+    </select>
+    <span asp-validation-for="MajorId" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="MaKhoa" class="form-label"></label>
+    <select asp-for="MaKhoa" asp-items="Model.Faculties" class="form-select">
+        <option value="">-- Chọn khoa --</option>
+    </select>
+    <span asp-validation-for="MaKhoa" class="text-danger"></span>
+</div>

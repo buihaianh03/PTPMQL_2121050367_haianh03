@@ -1,0 +1,30 @@
+@model DemoMVC.Models.Major
+
+@{
+    ViewData["Title"] = "Thêm ngành học";
+}
+
+<h1>Thêm ngành học</h1>
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Tên ngành</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="AdmissionCode" class="form-label">Mã ngành tuyển sinh chính thức (nếu có)</label>
+        <input asp-for="AdmissionCode" class="form-control" />
+        <span asp-validation-for="AdmissionCode" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="StudentCode" class="form-label">Mã ngành 2 chữ số trong MaSV (có thể cấu hình sau)</label>
+        <input asp-for="StudentCode" class="form-control" inputmode="numeric" maxlength="2" />
+        <span asp-validation-for="StudentCode" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Lưu</button>
+    <a asp-action="Index" class="btn btn-outline-secondary">Quay lại</a>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

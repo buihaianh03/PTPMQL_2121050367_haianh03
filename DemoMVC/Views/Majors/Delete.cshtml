@@ -1,0 +1,13 @@
+@model DemoMVC.Models.Major
+
+@{
+    ViewData["Title"] = "Xóa ngành học";
+}
+
+<h1>Xóa ngành học</h1>
+<p>Bạn có chắc muốn xóa ngành <strong>@Model.Name</strong> không?</p>
+<form asp-action="Delete" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <button type="submit" class="btn btn-danger">Xác nhận xóa</button>
+    <a asp-action="Index" class="btn btn-outline-secondary">Hủy</a>
+</form>

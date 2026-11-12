@@ -1,0 +1,60 @@
+@model IEnumerable<DemoMVC.ViewModels.StudentListItemViewModel>
+
+@{
+    ViewData["Title"] = "Quản lý sinh viên";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Quản lý sinh viên</h1>
+    <a asp-action="Create" class="btn btn-primary">Thêm sinh viên</a>
+</div>
+
+@if (TempData["Success"] is string success)
+{
+    <div class="alert alert-success">@success</div>
+}
+@if (TempData["Error"] is string error)
+{
+    <div class="alert alert-danger">@error</div>
+}
+
+<form asp-action="Index" method="get" class="row g-2 mb-3">
+    <div class="col-sm-8">
+        <input name="search" value="@ViewData["Search"]" class="form-control" placeholder="Tìm theo mã sinh viên hoặc họ tên" />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-primary">Tìm kiếm</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Xóa lọc</a>
+    </div>
+</form>
+
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Mã sinh viên</th>
+                <th>Họ tên</th>
+                <th>Năm nhập học</th>
+                <th>Ngành</th>
+                <th>Khoa</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>@student.MaSV</td>
+                <td>@student.FullName</td>
+                <td>@student.AdmissionYear</td>
+                <td>@student.MajorName</td>
+                <td>@student.FacultyName</td>
+                <td class="text-nowrap">
+                    <a asp-action="Edit" asp-route-id="@student.Id">Sửa</a> |
+                    <a asp-action="Delete" asp-route-id="@student.Id">Xóa</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

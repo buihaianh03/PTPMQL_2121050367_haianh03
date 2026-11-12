@@ -1,0 +1,26 @@
+@model DemoMVC.Models.TrainingSystem
+
+@{
+    ViewData["Title"] = "Sửa hệ đào tạo";
+}
+
+<h1>Sửa hệ đào tạo</h1>
+<form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+    <input asp-for="Id" type="hidden" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Tên hệ đào tạo</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="StudentCode" class="form-label">Mã hệ 2 chữ số</label>
+        <input asp-for="StudentCode" class="form-control" inputmode="numeric" maxlength="2" />
+        <span asp-validation-for="StudentCode" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+    <a asp-action="Index" class="btn btn-outline-secondary">Quay lại</a>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

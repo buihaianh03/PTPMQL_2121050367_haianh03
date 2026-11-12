@@ -1,0 +1,26 @@
+@model DemoMVC.ViewModels.FacultyDetailsViewModel
+
+@{
+    ViewData["Title"] = "Sinh viên theo khoa";
+}
+
+<h1>@Model.Name</h1>
+<p>Mã khoa: @Model.MaKhoa</p>
+<h2 class="h4">Sinh viên thuộc khoa</h2>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead><tr><th>Mã sinh viên</th><th>Họ tên</th><th>Năm nhập học</th><th>Ngành</th></tr></thead>
+        <tbody>
+        @foreach (var student in Model.Students)
+        {
+            <tr>
+                <td>@student.MaSV</td>
+                <td>@student.FullName</td>
+                <td>@student.AdmissionYear</td>
+                <td>@student.MajorName</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+<a asp-action="Index" class="btn btn-outline-secondary">Quay lại danh sách khoa</a>

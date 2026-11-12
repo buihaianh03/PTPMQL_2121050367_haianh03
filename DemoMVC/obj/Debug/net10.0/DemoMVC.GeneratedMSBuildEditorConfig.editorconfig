@@ -31,6 +31,26 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
 
+[C:/Users/Admin/Documents/GitHub/PTPMQL_2121050367_haianh03/DemoMVC/Views/Faculties/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFjdWx0aWVzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Documents/GitHub/PTPMQL_2121050367_haianh03/DemoMVC/Views/Faculties/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFjdWx0aWVzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Documents/GitHub/PTPMQL_2121050367_haianh03/DemoMVC/Views/Faculties/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFjdWx0aWVzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Documents/GitHub/PTPMQL_2121050367_haianh03/DemoMVC/Views/Faculties/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFjdWx0aWVzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Documents/GitHub/PTPMQL_2121050367_haianh03/DemoMVC/Views/Faculties/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFjdWx0aWVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Admin/Documents/GitHub/PTPMQL_2121050367_haianh03/DemoMVC/Views/Home/Contact.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDb250YWN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -49,6 +69,22 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Admin/Documents/GitHub/PTPMQL_2121050367_haianh03/DemoMVC/Views/Lesson4/Student/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVzc29uNFxTdHVkZW50XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Documents/GitHub/PTPMQL_2121050367_haianh03/DemoMVC/Views/Majors/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFqb3JzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Documents/GitHub/PTPMQL_2121050367_haianh03/DemoMVC/Views/Majors/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFqb3JzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Documents/GitHub/PTPMQL_2121050367_haianh03/DemoMVC/Views/Majors/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFqb3JzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Documents/GitHub/PTPMQL_2121050367_haianh03/DemoMVC/Views/Majors/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFqb3JzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Admin/Documents/GitHub/PTPMQL_2121050367_haianh03/DemoMVC/Views/Person/Create.cshtml]
@@ -73,6 +109,42 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Admin/Documents/GitHub/PTPMQL_2121050367_haianh03/DemoMVC/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Documents/GitHub/PTPMQL_2121050367_haianh03/DemoMVC/Views/StudentRecords/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFJlY29yZHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Documents/GitHub/PTPMQL_2121050367_haianh03/DemoMVC/Views/StudentRecords/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFJlY29yZHNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Documents/GitHub/PTPMQL_2121050367_haianh03/DemoMVC/Views/StudentRecords/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFJlY29yZHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Documents/GitHub/PTPMQL_2121050367_haianh03/DemoMVC/Views/StudentRecords/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFJlY29yZHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Documents/GitHub/PTPMQL_2121050367_haianh03/DemoMVC/Views/StudentRecords/_StudentFormFields.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFJlY29yZHNcX1N0dWRlbnRGb3JtRmllbGRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Documents/GitHub/PTPMQL_2121050367_haianh03/DemoMVC/Views/TrainingSystems/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhaW5pbmdTeXN0ZW1zXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Documents/GitHub/PTPMQL_2121050367_haianh03/DemoMVC/Views/TrainingSystems/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhaW5pbmdTeXN0ZW1zXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Documents/GitHub/PTPMQL_2121050367_haianh03/DemoMVC/Views/TrainingSystems/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhaW5pbmdTeXN0ZW1zXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Documents/GitHub/PTPMQL_2121050367_haianh03/DemoMVC/Views/TrainingSystems/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhaW5pbmdTeXN0ZW1zXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Admin/Documents/GitHub/PTPMQL_2121050367_haianh03/DemoMVC/Views/_ViewImports.cshtml]
