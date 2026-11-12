@@ -48,14 +48,14 @@ public class StudentRecordsController : Controller
                 AdmissionYear = x.AdmissionYear
             })
             .ToListAsync();
-        return View(students);
+        return IsRowsRequest ? PartialView("_Rows", students) : View(students);
     }
 
     public async Task<IActionResult> Create()
     {
         var model = new StudentFormViewModel { AdmissionYear = DateTime.UtcNow.Year };
         await PopulateListsAsync(model);
-        return View(model);
+        return IsAjaxRequest ? PartialView(model) : View(model);
     }
 
     [HttpGet]
@@ -87,7 +87,7 @@ public class StudentRecordsController : Controller
         if (!ModelState.IsValid)
         {
             await PopulateListsAsync(model);
-            return View(model);
+            return AjaxView("Create", model);
         }
 
         try
@@ -96,6 +96,11 @@ public class StudentRecordsController : Controller
             switch (result.Status)
             {
                 case StudentSaveStatus.Saved:
+                    if (IsAjaxRequest)
+                    {
+                        return Json(new { message = $"Đã thêm sinh viên {result.MaSV}." });
+                    }
+
                     TempData["Success"] = $"Đã thêm sinh viên {result.MaSV}.";
                     return RedirectToAction(nameof(Index));
                 case StudentSaveStatus.FacultyNotFound:
@@ -131,7 +136,7 @@ public class StudentRecordsController : Controller
         }
 
         await PopulateListsAsync(model);
-        return View(model);
+        return AjaxView("Create", model);
     }
 
     public async Task<IActionResult> Edit(int? id)
@@ -159,7 +164,7 @@ public class StudentRecordsController : Controller
             MaKhoa = student.MaKhoa
         };
         await PopulateListsAsync(model);
-        return View(model);
+        return IsAjaxRequest ? PartialView("Edit", model) : View(model);
     }
 
     [HttpPost]
@@ -174,7 +179,7 @@ public class StudentRecordsController : Controller
         if (!ModelState.IsValid)
         {
             await PopulateListsAsync(model);
-            return View(model);
+            return AjaxView("Edit", model);
         }
 
         try
@@ -183,6 +188,11 @@ public class StudentRecordsController : Controller
             switch (result.Status)
             {
                 case StudentSaveStatus.Saved:
+                    if (IsAjaxRequest)
+                    {
+                        return Json(new { message = "Đã cập nhật thông tin sinh viên." });
+                    }
+
                     TempData["Success"] = "Đã cập nhật thông tin sinh viên.";
                     return RedirectToAction(nameof(Index));
                 case StudentSaveStatus.NotFound:
@@ -220,7 +230,24 @@ public class StudentRecordsController : Controller
         }
 
         await PopulateListsAsync(model);
-        return View(model);
+        return AjaxView("Edit", model);
+    }
+
+    public async Task<IActionResult> Details(int? id)
+    {
+        if (id is null)
+        {
+            return NotFound();
+        }
+
+        var student = await _context.Students.AsNoTracking()
+            .Include(x => x.Faculty)
+            .Include(x => x.Major)
+            .Include(x => x.TrainingSystem)
+            .SingleOrDefaultAsync(x => x.Id == id);
+        return student is null
+            ? NotFound()
+            : IsAjaxRequest ? PartialView("Details", student) : View("Details", student);
     }
 
     public async Task<IActionResult> Delete(int? id)
@@ -235,7 +262,16 @@ public class StudentRecordsController : Controller
             .SingleOrDefaultAsync(x => x.Id == id);
         return student is null
             ? NotFound()
-            : View(new StudentListItemViewModel
+            : IsAjaxRequest
+                ? PartialView("Delete", new StudentListItemViewModel
+                {
+                    Id = student.Id,
+                    MaSV = student.MaSV,
+                    FullName = student.FullName,
+                    FacultyName = student.Faculty.Name,
+                    AdmissionYear = student.AdmissionYear
+                })
+                : View(new StudentListItemViewModel
             {
                 Id = student.Id,
                 MaSV = student.MaSV,
@@ -257,8 +293,33 @@ public class StudentRecordsController : Controller
 
         _context.Students.Remove(student);
         await _context.SaveChangesAsync();
+        if (IsAjaxRequest)
+        {
+            return Json(new { message = "Đã xóa sinh viên. Mã đã cấp sẽ không được sử dụng lại." });
+        }
+
         TempData["Success"] = "Đã xóa sinh viên. Mã đã cấp sẽ không được sử dụng lại.";
         return RedirectToAction(nameof(Index));
+    }
+
+    private bool IsAjaxRequest => string.Equals(
+        ControllerContext.HttpContext?.Request.Headers["X-Requested-With"].ToString(),
+        "XMLHttpRequest",
+        StringComparison.Ordinal);
+    private bool IsRowsRequest => string.Equals(
+        ControllerContext.HttpContext?.Request.Query["partial"].ToString(),
+        "rows",
+        StringComparison.Ordinal);
+
+    private IActionResult AjaxView(string viewName, StudentFormViewModel model)
+    {
+        if (!IsAjaxRequest)
+        {
+            return View(viewName, model);
+        }
+
+        Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
+        return PartialView(viewName, model);
     }
 
     private async Task PopulateListsAsync(StudentFormViewModel model)

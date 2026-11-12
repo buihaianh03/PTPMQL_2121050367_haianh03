@@ -1,0 +1,17 @@
+@model DemoMVC.Models.StudentRecord
+
+<h2 class="h5">@Model.FullName</h2>
+<dl class="row">
+    <dt class="col-sm-4">Mã sinh viên</dt>
+    <dd class="col-sm-8">@Model.MaSV</dd>
+    <dt class="col-sm-4">Địa chỉ</dt>
+    <dd class="col-sm-8">@Model.Address</dd>
+    <dt class="col-sm-4">Năm nhập học</dt>
+    <dd class="col-sm-8">@Model.AdmissionYear</dd>
+    <dt class="col-sm-4">Khoa</dt>
+    <dd class="col-sm-8">@Model.Faculty.Name</dd>
+    <dt class="col-sm-4">Ngành học</dt>
+    <dd class="col-sm-8">@Model.Major.Name</dd>
+    <dt class="col-sm-4">Hệ đào tạo</dt>
+    <dd class="col-sm-8">@Model.TrainingSystem.Name</dd>
+</dl>

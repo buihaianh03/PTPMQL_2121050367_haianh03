@@ -19,7 +19,7 @@
         <span asp-validation-for="StudentCode" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-    <a asp-action="Index" class="btn btn-outline-secondary">Quay lại</a>
+    <a asp-action="Index" class="btn btn-outline-secondary" data-modal-cancel>Quay lại</a>
 </form>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

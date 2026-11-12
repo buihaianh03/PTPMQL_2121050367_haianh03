@@ -1,0 +1,16 @@
+@model IEnumerable<DemoMVC.ViewModels.FacultyDetailsViewModel>
+
+<tbody data-ajax-rows>
+@foreach (var faculty in Model)
+{
+    <tr>
+        <td>@faculty.MaKhoa</td>
+        <td>@faculty.Name</td>
+        <td class="text-nowrap">
+            <a asp-action="Details" asp-route-id="@faculty.MaKhoa" class="btn btn-sm btn-outline-info" data-ajax-modal data-modal-title="Chi tiết khoa">Xem</a>
+            <a asp-action="Edit" asp-route-id="@faculty.MaKhoa" class="btn btn-sm btn-outline-primary" data-ajax-modal data-modal-title="Sửa khoa">Sửa</a>
+            <a asp-action="Delete" asp-route-id="@faculty.MaKhoa" class="btn btn-sm btn-outline-danger" data-ajax-modal data-modal-title="Xóa khoa">Xóa</a>
+        </td>
+    </tr>
+}
+</tbody>

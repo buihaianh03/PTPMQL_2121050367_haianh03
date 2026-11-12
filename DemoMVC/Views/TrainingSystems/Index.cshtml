@@ -6,7 +6,7 @@
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h1>Danh mục hệ đào tạo</h1>
-    <a asp-action="Create" class="btn btn-primary">Thêm hệ</a>
+    <a asp-action="Create" class="btn btn-primary" data-ajax-modal data-modal-title="Thêm hệ đào tạo">Thêm hệ</a>
 </div>
 @if (TempData["Success"] is string success)
 {
@@ -28,14 +28,5 @@
 <div class="alert alert-info">Mã hệ có thể để trống trong danh mục; sinh viên chỉ tạo được khi mã 2 chữ số đã được cấu hình.</div>
 <table class="table table-striped">
     <thead><tr><th>Tên hệ</th><th>Mã sinh viên</th><th></th></tr></thead>
-    <tbody>
-    @foreach (var system in Model)
-    {
-        <tr>
-            <td>@system.Name</td>
-            <td>@(system.StudentCode ?? "Chưa cấu hình")</td>
-            <td><a asp-action="Edit" asp-route-id="@system.Id">Sửa</a> | <a asp-action="Delete" asp-route-id="@system.Id">Xóa</a></td>
-        </tr>
-    }
-    </tbody>
+    <partial name="_Rows" model="Model" />
 </table>

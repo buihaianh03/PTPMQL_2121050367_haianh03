@@ -1,12 +1,14 @@
 (() => {
+    function initializeStudentForm() {
     const form = document.getElementById("student-form");
     const button = document.getElementById("preview-code");
     const code = document.getElementById("MaSV");
     const message = document.getElementById("code-message");
 
-    if (!form || !button || !code || !message) {
+    if (!form || !button || !code || !message || form.dataset.previewInitialized === "true") {
         return;
     }
+    form.dataset.previewInitialized = "true";
 
     const fields = ["AdmissionYear", "TrainingSystemId", "MajorId"];
     const initialValues = Object.fromEntries(
@@ -54,4 +56,8 @@
             button.disabled = false;
         }
     });
+    }
+
+    window.initializeStudentForm = initializeStudentForm;
+    initializeStudentForm();
 })();

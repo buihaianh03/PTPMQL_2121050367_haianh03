@@ -25,10 +25,11 @@ public class TrainingSystemsController : Controller
         }
 
         ViewData["Search"] = search;
-        return View(await systems.OrderBy(x => x.Name).ToListAsync());
+        var result = await systems.OrderBy(x => x.Name).ToListAsync();
+        return IsRowsRequest ? PartialView("_Rows", result) : View(result);
     }
 
-    public IActionResult Create() => View(new TrainingSystem());
+    public IActionResult Create() => IsAjaxRequest ? PartialView(new TrainingSystem()) : View(new TrainingSystem());
 
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -37,7 +38,7 @@ public class TrainingSystemsController : Controller
         input.StudentCode = Normalize(input.StudentCode);
         if (!ModelState.IsValid)
         {
-            return View(input);
+            return AjaxView("Create", input);
         }
 
         _context.TrainingSystems.Add(input);
@@ -48,11 +49,34 @@ public class TrainingSystemsController : Controller
         catch (DbUpdateException ex) when (IsUniqueConstraint(ex))
         {
             ModelState.AddModelError(string.Empty, "Tên hoặc mã hệ đã tồn tại.");
-            return View(input);
+            return AjaxView("Create", input);
+        }
+
+        if (IsAjaxRequest)
+        {
+            return Json(new { message = "Đã thêm hệ đào tạo." });
         }
 
         TempData["Success"] = "Đã thêm hệ đào tạo.";
         return RedirectToAction(nameof(Index));
+    }
+
+    public async Task<IActionResult> Details(int? id)
+    {
+        if (id is null)
+        {
+            return NotFound();
+        }
+
+        var system = await _context.TrainingSystems.AsNoTracking()
+            .Include(x => x.Students)
+                .ThenInclude(x => x.Faculty)
+            .Include(x => x.Students)
+                .ThenInclude(x => x.Major)
+            .SingleOrDefaultAsync(x => x.Id == id);
+        return system is null
+            ? NotFound()
+            : IsAjaxRequest ? PartialView("Details", system) : View("Details", system);
     }
 
     public async Task<IActionResult> Edit(int? id)
@@ -63,7 +87,7 @@ public class TrainingSystemsController : Controller
         }
 
         var system = await _context.TrainingSystems.FindAsync(id);
-        return system is null ? NotFound() : View(system);
+        return system is null ? NotFound() : IsAjaxRequest ? PartialView("Edit", system) : View(system);
     }
 
     [HttpPost]
@@ -78,7 +102,7 @@ public class TrainingSystemsController : Controller
         input.StudentCode = Normalize(input.StudentCode);
         if (!ModelState.IsValid)
         {
-            return View(input);
+            return AjaxView("Edit", input);
         }
 
         var system = await _context.TrainingSystems.FindAsync(id);
@@ -91,7 +115,7 @@ public class TrainingSystemsController : Controller
             && await _context.Students.AnyAsync(x => x.TrainingSystemId == id))
         {
             ModelState.AddModelError(nameof(input.StudentCode), "Không thể đổi mã hệ khi đã có sinh viên sử dụng hệ này.");
-            return View(input);
+            return AjaxView("Edit", input);
         }
 
         system.Name = input.Name;
@@ -103,7 +127,12 @@ public class TrainingSystemsController : Controller
         catch (DbUpdateException ex) when (IsUniqueConstraint(ex))
         {
             ModelState.AddModelError(string.Empty, "Tên hoặc mã hệ đã tồn tại.");
-            return View(input);
+            return AjaxView("Edit", input);
+        }
+
+        if (IsAjaxRequest)
+        {
+            return Json(new { message = "Đã cập nhật hệ đào tạo." });
         }
 
         TempData["Success"] = "Đã cập nhật hệ đào tạo.";
@@ -118,7 +147,7 @@ public class TrainingSystemsController : Controller
         }
 
         var system = await _context.TrainingSystems.FindAsync(id);
-        return system is null ? NotFound() : View(system);
+        return system is null ? NotFound() : IsAjaxRequest ? PartialView("Delete", system) : View(system);
     }
 
     [HttpPost, ActionName("Delete")]
@@ -133,6 +162,11 @@ public class TrainingSystemsController : Controller
 
         if (await _context.Students.AnyAsync(x => x.TrainingSystemId == id))
         {
+            if (IsAjaxRequest)
+            {
+                return Conflict(new { message = "Không thể xóa hệ đào tạo đang có sinh viên tham chiếu." });
+            }
+
             TempData["Error"] = "Không thể xóa hệ đào tạo đang có sinh viên tham chiếu.";
             return RedirectToAction(nameof(Index));
         }
@@ -144,12 +178,42 @@ public class TrainingSystemsController : Controller
         }
         catch (DbUpdateException ex) when (IsForeignKeyConstraint(ex))
         {
+            if (IsAjaxRequest)
+            {
+                return Conflict(new { message = "Không thể xóa hệ đào tạo đang được dữ liệu khác tham chiếu." });
+            }
+
             TempData["Error"] = "Không thể xóa hệ đào tạo đang được dữ liệu khác tham chiếu.";
             return RedirectToAction(nameof(Index));
         }
 
+        if (IsAjaxRequest)
+        {
+            return Json(new { message = "Đã xóa hệ đào tạo." });
+        }
+
         TempData["Success"] = "Đã xóa hệ đào tạo.";
         return RedirectToAction(nameof(Index));
+    }
+
+    private bool IsAjaxRequest => string.Equals(
+        ControllerContext.HttpContext?.Request.Headers["X-Requested-With"].ToString(),
+        "XMLHttpRequest",
+        StringComparison.Ordinal);
+    private bool IsRowsRequest => string.Equals(
+        ControllerContext.HttpContext?.Request.Query["partial"].ToString(),
+        "rows",
+        StringComparison.Ordinal);
+
+    private IActionResult AjaxView(string viewName, TrainingSystem model)
+    {
+        if (!IsAjaxRequest)
+        {
+            return View(viewName, model);
+        }
+
+        Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
+        return PartialView(viewName, model);
     }
 
     private static string? Normalize(string? value) =>

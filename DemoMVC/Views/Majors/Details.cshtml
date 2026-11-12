@@ -1,0 +1,33 @@
+@model DemoMVC.Models.Major
+
+<h2 class="h5">@Model.Name</h2>
+<dl class="row">
+    <dt class="col-sm-4">Mã tuyển sinh</dt>
+    <dd class="col-sm-8">@(Model.AdmissionCode ?? "Chưa cấu hình")</dd>
+    <dt class="col-sm-4">Mã trong mã sinh viên</dt>
+    <dd class="col-sm-8">@(Model.StudentCode ?? "Chưa cấu hình")</dd>
+</dl>
+<h3 class="h6">Sinh viên đang sử dụng ngành (@Model.Students.Count)</h3>
+@if (Model.Students.Count == 0)
+{
+    <p class="text-muted">Chưa có sinh viên.</p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-sm">
+            <thead><tr><th>Mã sinh viên</th><th>Họ tên</th><th>Khoa</th><th>Hệ đào tạo</th></tr></thead>
+            <tbody>
+            @foreach (var student in Model.Students)
+            {
+                <tr>
+                    <td>@student.MaSV</td>
+                    <td>@student.FullName</td>
+                    <td>@student.Faculty.Name</td>
+                    <td>@student.TrainingSystem.Name</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}

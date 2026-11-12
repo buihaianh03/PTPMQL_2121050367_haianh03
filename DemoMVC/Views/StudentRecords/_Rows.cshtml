@@ -1,0 +1,19 @@
+@model IEnumerable<DemoMVC.ViewModels.StudentListItemViewModel>
+
+<tbody data-ajax-rows>
+@foreach (var student in Model)
+{
+    <tr>
+        <td>@student.MaSV</td>
+        <td>@student.FullName</td>
+        <td>@student.AdmissionYear</td>
+        <td>@student.MajorName</td>
+        <td>@student.FacultyName</td>
+        <td class="text-nowrap">
+            <a asp-action="Details" asp-route-id="@student.Id" class="btn btn-sm btn-outline-info" data-ajax-modal data-modal-title="Chi tiết sinh viên">Xem</a>
+            <a asp-action="Edit" asp-route-id="@student.Id" class="btn btn-sm btn-outline-primary" data-ajax-modal data-modal-title="Sửa sinh viên">Sửa</a>
+            <a asp-action="Delete" asp-route-id="@student.Id" class="btn btn-sm btn-outline-danger" data-ajax-modal data-modal-title="Xóa sinh viên">Xóa</a>
+        </td>
+    </tr>
+}
+</tbody>

@@ -27,10 +27,11 @@ public class MajorsController : Controller
         }
 
         ViewData["Search"] = search;
-        return View(await majors.OrderBy(x => x.Name).ToListAsync());
+        var result = await majors.OrderBy(x => x.Name).ToListAsync();
+        return IsRowsRequest ? PartialView("_Rows", result) : View(result);
     }
 
-    public IActionResult Create() => View(new Major());
+    public IActionResult Create() => IsAjaxRequest ? PartialView(new Major()) : View(new Major());
 
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -39,7 +40,7 @@ public class MajorsController : Controller
         Normalize(input);
         if (!ModelState.IsValid)
         {
-            return View(input);
+            return AjaxView("Create", input);
         }
 
         _context.Majors.Add(input);
@@ -50,11 +51,34 @@ public class MajorsController : Controller
         catch (DbUpdateException ex) when (IsUniqueConstraint(ex))
         {
             ModelState.AddModelError(string.Empty, "Tên, mã tuyển sinh hoặc mã ngành đã tồn tại.");
-            return View(input);
+            return AjaxView("Create", input);
+        }
+
+        if (IsAjaxRequest)
+        {
+            return Json(new { message = "Đã thêm ngành học." });
         }
 
         TempData["Success"] = "Đã thêm ngành học.";
         return RedirectToAction(nameof(Index));
+    }
+
+    public async Task<IActionResult> Details(int? id)
+    {
+        if (id is null)
+        {
+            return NotFound();
+        }
+
+        var major = await _context.Majors.AsNoTracking()
+            .Include(x => x.Students)
+                .ThenInclude(x => x.Faculty)
+            .Include(x => x.Students)
+                .ThenInclude(x => x.TrainingSystem)
+            .SingleOrDefaultAsync(x => x.Id == id);
+        return major is null
+            ? NotFound()
+            : IsAjaxRequest ? PartialView("Details", major) : View("Details", major);
     }
 
     public async Task<IActionResult> Edit(int? id)
@@ -65,7 +89,7 @@ public class MajorsController : Controller
         }
 
         var major = await _context.Majors.FindAsync(id);
-        return major is null ? NotFound() : View(major);
+        return major is null ? NotFound() : IsAjaxRequest ? PartialView("Edit", major) : View(major);
     }
 
     [HttpPost]
@@ -80,7 +104,7 @@ public class MajorsController : Controller
         Normalize(input);
         if (!ModelState.IsValid)
         {
-            return View(input);
+            return AjaxView("Edit", input);
         }
 
         var major = await _context.Majors.FindAsync(id);
@@ -93,7 +117,7 @@ public class MajorsController : Controller
             && await _context.Students.AnyAsync(x => x.MajorId == id))
         {
             ModelState.AddModelError(nameof(input.StudentCode), "Không thể đổi mã ngành khi đã có sinh viên sử dụng ngành này.");
-            return View(input);
+            return AjaxView("Edit", input);
         }
 
         major.Name = input.Name;
@@ -106,7 +130,12 @@ public class MajorsController : Controller
         catch (DbUpdateException ex) when (IsUniqueConstraint(ex))
         {
             ModelState.AddModelError(string.Empty, "Tên, mã tuyển sinh hoặc mã ngành đã tồn tại.");
-            return View(input);
+            return AjaxView("Edit", input);
+        }
+
+        if (IsAjaxRequest)
+        {
+            return Json(new { message = "Đã cập nhật ngành học." });
         }
 
         TempData["Success"] = "Đã cập nhật ngành học.";
@@ -121,7 +150,7 @@ public class MajorsController : Controller
         }
 
         var major = await _context.Majors.FindAsync(id);
-        return major is null ? NotFound() : View(major);
+        return major is null ? NotFound() : IsAjaxRequest ? PartialView("Delete", major) : View(major);
     }
 
     [HttpPost, ActionName("Delete")]
@@ -136,6 +165,11 @@ public class MajorsController : Controller
 
         if (await _context.Students.AnyAsync(x => x.MajorId == id))
         {
+            if (IsAjaxRequest)
+            {
+                return Conflict(new { message = "Không thể xóa ngành học đang có sinh viên tham chiếu." });
+            }
+
             TempData["Error"] = "Không thể xóa ngành học đang có sinh viên tham chiếu.";
             return RedirectToAction(nameof(Index));
         }
@@ -147,12 +181,42 @@ public class MajorsController : Controller
         }
         catch (DbUpdateException ex) when (IsForeignKeyConstraint(ex))
         {
+            if (IsAjaxRequest)
+            {
+                return Conflict(new { message = "Không thể xóa ngành học đang được dữ liệu khác tham chiếu." });
+            }
+
             TempData["Error"] = "Không thể xóa ngành học đang được dữ liệu khác tham chiếu.";
             return RedirectToAction(nameof(Index));
         }
 
+        if (IsAjaxRequest)
+        {
+            return Json(new { message = "Đã xóa ngành học." });
+        }
+
         TempData["Success"] = "Đã xóa ngành học.";
         return RedirectToAction(nameof(Index));
+    }
+
+    private bool IsAjaxRequest => string.Equals(
+        ControllerContext.HttpContext?.Request.Headers["X-Requested-With"].ToString(),
+        "XMLHttpRequest",
+        StringComparison.Ordinal);
+    private bool IsRowsRequest => string.Equals(
+        ControllerContext.HttpContext?.Request.Query["partial"].ToString(),
+        "rows",
+        StringComparison.Ordinal);
+
+    private IActionResult AjaxView(string viewName, Major model)
+    {
+        if (!IsAjaxRequest)
+        {
+            return View(viewName, model);
+        }
+
+        Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
+        return PartialView(viewName, model);
     }
 
     private static void Normalize(Major major)

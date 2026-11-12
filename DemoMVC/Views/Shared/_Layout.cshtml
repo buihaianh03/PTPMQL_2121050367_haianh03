@@ -69,6 +69,9 @@
                             <a class="nav-link" asp-controller="Majors" asp-action="Index">Ngành học</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" asp-controller="Person" asp-action="Index">Người</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link"
                                asp-controller="Home"
                                asp-action="Index">
@@ -105,6 +108,19 @@
         @RenderBody()
     </main>
 
+    <div class="modal fade" id="ajaxCrudModal" tabindex="-1" aria-labelledby="ajaxCrudTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title fs-5" id="ajaxCrudTitle">Thông tin</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                </div>
+                <div class="modal-body" id="ajaxCrudBody"></div>
+            </div>
+        </div>
+    </div>
+    <div id="ajaxCrudNotifications" class="toast-container position-fixed bottom-0 end-0 p-3" aria-live="polite" aria-atomic="true"></div>
+
     <!-- Footer -->
     <footer class="footer-custom">
         <div class="container text-center">
@@ -123,6 +139,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/student-form.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

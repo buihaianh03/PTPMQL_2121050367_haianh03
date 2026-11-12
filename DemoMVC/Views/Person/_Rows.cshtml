@@ -1,0 +1,17 @@
+@model IEnumerable<DemoMVC.Models.Person>
+
+<tbody data-ajax-rows>
+@foreach (var person in Model)
+{
+    <tr>
+        <td>@person.Id</td>
+        <td>@person.FullName</td>
+        <td>@person.Address</td>
+        <td class="text-nowrap">
+            <a asp-action="Details" asp-route-id="@person.Id" class="btn btn-sm btn-outline-info" data-ajax-modal data-modal-title="Chi tiết người">Xem</a>
+            <a asp-action="Edit" asp-route-id="@person.Id" class="btn btn-sm btn-outline-primary" data-ajax-modal data-modal-title="Sửa người">Sửa</a>
+            <a asp-action="Delete" asp-route-id="@person.Id" class="btn btn-sm btn-outline-danger" data-ajax-modal data-modal-title="Xóa người">Xóa</a>
+        </td>
+    </tr>
+}
+</tbody>

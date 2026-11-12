@@ -1,0 +1,16 @@
+@model IEnumerable<DemoMVC.Models.TrainingSystem>
+
+<tbody data-ajax-rows>
+@foreach (var system in Model)
+{
+    <tr>
+        <td>@system.Name</td>
+        <td>@(system.StudentCode ?? "Chưa cấu hình")</td>
+        <td class="text-nowrap">
+            <a asp-action="Details" asp-route-id="@system.Id" class="btn btn-sm btn-outline-info" data-ajax-modal data-modal-title="Chi tiết hệ đào tạo">Xem</a>
+            <a asp-action="Edit" asp-route-id="@system.Id" class="btn btn-sm btn-outline-primary" data-ajax-modal data-modal-title="Sửa hệ đào tạo">Sửa</a>
+            <a asp-action="Delete" asp-route-id="@system.Id" class="btn btn-sm btn-outline-danger" data-ajax-modal data-modal-title="Xóa hệ đào tạo">Xóa</a>
+        </td>
+    </tr>
+}
+</tbody>

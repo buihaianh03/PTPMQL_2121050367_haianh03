@@ -1,0 +1,17 @@
+@model IEnumerable<DemoMVC.Models.Major>
+
+<tbody data-ajax-rows>
+@foreach (var major in Model)
+{
+    <tr>
+        <td>@major.Name</td>
+        <td>@(major.AdmissionCode ?? "—")</td>
+        <td>@(major.StudentCode ?? "Chưa cấu hình")</td>
+        <td class="text-nowrap">
+            <a asp-action="Details" asp-route-id="@major.Id" class="btn btn-sm btn-outline-info" data-ajax-modal data-modal-title="Chi tiết ngành học">Xem</a>
+            <a asp-action="Edit" asp-route-id="@major.Id" class="btn btn-sm btn-outline-primary" data-ajax-modal data-modal-title="Sửa ngành học">Sửa</a>
+            <a asp-action="Delete" asp-route-id="@major.Id" class="btn btn-sm btn-outline-danger" data-ajax-modal data-modal-title="Xóa ngành học">Xóa</a>
+        </td>
+    </tr>
+}
+</tbody>

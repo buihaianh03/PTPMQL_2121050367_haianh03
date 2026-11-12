@@ -9,20 +9,20 @@ public class StudentRecord
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
-    [Required]
-    [StringLength(10, MinimumLength = 10)]
+    [Required(ErrorMessage = "Vui lòng nhập mã sinh viên.")]
+    [StringLength(10, MinimumLength = 10, ErrorMessage = "Mã sinh viên phải gồm đúng 10 chữ số.")]
     [RegularExpression(@"^\d{10}$", ErrorMessage = "Mã sinh viên phải gồm đúng 10 chữ số.")]
     public string MaSV { get; set; } = string.Empty;
 
-    [Required]
-    [StringLength(100)]
+    [Required(ErrorMessage = "Vui lòng nhập họ tên.")]
+    [StringLength(100, ErrorMessage = "Họ tên không được vượt quá 100 ký tự.")]
     public string FullName { get; set; } = string.Empty;
 
-    [Required]
-    [StringLength(200)]
+    [Required(ErrorMessage = "Vui lòng nhập địa chỉ.")]
+    [StringLength(200, ErrorMessage = "Địa chỉ không được vượt quá 200 ký tự.")]
     public string Address { get; set; } = string.Empty;
 
-    [Range(2000, 2099)]
+    [Range(2000, 2099, ErrorMessage = "Năm nhập học phải từ 2000 đến 2099.")]
     public int AdmissionYear { get; set; }
 
     public int TrainingSystemId { get; set; }

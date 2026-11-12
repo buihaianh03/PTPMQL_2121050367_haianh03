@@ -6,7 +6,7 @@
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h1>Quản lý sinh viên</h1>
-    <a asp-action="Create" class="btn btn-primary">Thêm sinh viên</a>
+    <a asp-action="Create" class="btn btn-primary" data-ajax-modal data-modal-title="Thêm sinh viên">Thêm sinh viên</a>
 </div>
 
 @if (TempData["Success"] is string success)
@@ -40,21 +40,6 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody>
-        @foreach (var student in Model)
-        {
-            <tr>
-                <td>@student.MaSV</td>
-                <td>@student.FullName</td>
-                <td>@student.AdmissionYear</td>
-                <td>@student.MajorName</td>
-                <td>@student.FacultyName</td>
-                <td class="text-nowrap">
-                    <a asp-action="Edit" asp-route-id="@student.Id">Sửa</a> |
-                    <a asp-action="Delete" asp-route-id="@student.Id">Xóa</a>
-                </td>
-            </tr>
-        }
-        </tbody>
+        <partial name="_Rows" model="Model" />
     </table>
 </div>
