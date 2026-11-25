@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "PlmB8tlJ7ys=",
+  "dgSpecHash": "iUfsxBLA9u0=",
   "success": true,
   "projectFilePath": "C:\\Users\\Admin\\Documents\\GitHub\\PTPMQL_2121050367_haianh03\\DemoMVC\\DemoMVC.csproj",
   "expectedPackageFiles": [
@@ -56,6 +56,7 @@
     "C:\\Users\\Admin\\.nuget\\packages\\humanizer.core.zh-cn\\2.14.1\\humanizer.core.zh-cn.2.14.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\humanizer.core.zh-hans\\2.14.1\\humanizer.core.zh-hans.2.14.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\humanizer.core.zh-hant\\2.14.1\\humanizer.core.zh-hant.2.14.1.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\10.0.12\\microsoft.aspnetcore.identity.entityframeworkcore.10.0.12.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\6.0.24\\microsoft.aspnetcore.razor.language.6.0.24.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\8.0.0\\microsoft.bcl.asyncinterfaces.8.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.build\\17.11.48\\microsoft.build.17.11.48.nupkg.sha512",

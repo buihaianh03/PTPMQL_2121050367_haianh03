@@ -373,3 +373,13 @@ C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\DemoMVC\obj\Debug\net
 C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\DemoMVC\obj\Debug\net10.0\DemoMVC.pdb
 C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\DemoMVC\obj\Debug\net10.0\DemoMVC.genruntimeconfig.cache
 C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\DemoMVC\obj\Debug\net10.0\ref\DemoMVC.dll
+C:\Users\Admin\Documents\GitHub\PTPMQL_2121050367_haianh03\demoMVC\bin\Debug\net10.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\Admin\AppData\Local\Temp\ptpmql-build-check-544cfab16a6e4b1b91a5320a33541076\appsettings.Development.json
+C:\Users\Admin\AppData\Local\Temp\ptpmql-build-check-544cfab16a6e4b1b91a5320a33541076\appsettings.json
+C:\Users\Admin\AppData\Local\Temp\ptpmql-build-check-544cfab16a6e4b1b91a5320a33541076\DemoMVC.staticwebassets.runtime.json
+C:\Users\Admin\AppData\Local\Temp\ptpmql-build-check-544cfab16a6e4b1b91a5320a33541076\DemoMVC.staticwebassets.endpoints.json
+C:\Users\Admin\AppData\Local\Temp\ptpmql-build-check-544cfab16a6e4b1b91a5320a33541076\DemoMVC.exe
+C:\Users\Admin\AppData\Local\Temp\ptpmql-build-check-544cfab16a6e4b1b91a5320a33541076\DemoMVC.deps.json
+C:\Users\Admin\AppData\Local\Temp\ptpmql-build-check-544cfab16a6e4b1b91a5320a33541076\DemoMVC.runtimeconfig.json
+C:\Users\Admin\AppData\Local\Temp\ptpmql-build-check-544cfab16a6e4b1b91a5320a33541076\DemoMVC.dll
+C:\Users\Admin\AppData\Local\Temp\ptpmql-build-check-544cfab16a6e4b1b91a5320a33541076\DemoMVC.pdb

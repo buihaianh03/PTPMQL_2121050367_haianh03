@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("DemoMVC-PTPMQL-2121050367")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("DemoMVC")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+20c0d880036a731ebd289c2ff4dbb61e8f10f47c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2f74a9dceb8bf2fdbe08e2fdc4371749f8d20adf")]
 [assembly: System.Reflection.AssemblyProductAttribute("DemoMVC")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DemoMVC")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

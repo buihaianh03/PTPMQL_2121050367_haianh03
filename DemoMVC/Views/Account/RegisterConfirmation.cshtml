@@ -1,0 +1,21 @@
+@model DemoMVC.ViewModels.RegisterConfirmationViewModel
+@{
+    ViewData["Title"] = "Kiểm tra email";
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+        <div class="alert alert-info shadow-sm">
+            <h1 class="h4">Kiểm tra hộp thư</h1>
+            @if (Model.EmailSent)
+            {
+                <p class="mb-3">Máy chủ email đã chấp nhận thư xác thực. Hãy kiểm tra hộp thư đến và thư rác, sau đó mở liên kết để kích hoạt tài khoản.</p>
+            }
+            else
+            {
+                <p class="alert alert-warning mb-3">Tài khoản đã được tạo nhưng email xác thực chưa gửi được. Vui lòng kiểm tra cấu hình SMTP hoặc thử gửi lại sau.</p>
+            }
+            <a asp-action="ResendConfirmationEmail" class="btn btn-primary">Gửi lại email xác thực</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+@model DemoMVC.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Đăng nhập";
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-5">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4 p-md-5">
+                <h1 class="h3 text-center mb-4">Đăng nhập</h1>
+                <form asp-action="Login" method="post">
+                    <input asp-for="ReturnUrl" type="hidden" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    @if (ViewData["EmailNotConfirmed"] is true)
+                    {
+                        <div class="alert alert-warning">
+                            <a asp-action="ResendConfirmationEmail">Gửi lại email xác thực</a>
+                        </div>
+                    }
+                    <div class="mb-3">
+                        <label asp-for="Identifier" class="form-label"></label>
+                        <input asp-for="Identifier" class="form-control" autocomplete="username" autofocus />
+                        <span asp-validation-for="Identifier" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label"></label>
+                        <input asp-for="Password" class="form-control" autocomplete="current-password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input asp-for="RememberMe" class="form-check-input" />
+                        <label asp-for="RememberMe" class="form-check-label"></label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
+                </form>
+                <div class="d-flex flex-column gap-2 mt-4 text-center">
+                    <a asp-action="ForgotPassword">Quên mật khẩu?</a>
+                    <a asp-action="ResendConfirmationEmail">Gửi lại email xác thực</a>
+                    <span>Chưa có tài khoản? <a asp-action="Register">Đăng ký</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

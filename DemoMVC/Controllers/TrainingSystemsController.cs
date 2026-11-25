@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using DemoMVC.ViewModels;
 
 namespace DemoMVC.Controllers;
 
+[Authorize(Roles = "Admin")]
 public class TrainingSystemsController : Controller
 {
     private readonly ApplicationDbContext _context;

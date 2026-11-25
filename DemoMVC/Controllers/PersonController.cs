@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DemoMVC.Data;
@@ -6,6 +7,7 @@ using DemoMVC.ViewModels;
 
 namespace DemoMVC.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class PersonController : Controller
     {
         private readonly ApplicationDbContext _context;

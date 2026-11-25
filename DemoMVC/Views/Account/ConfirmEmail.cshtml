@@ -1,0 +1,21 @@
+@model DemoMVC.ViewModels.EmailConfirmationViewModel
+@{
+    ViewData["Title"] = "Xác thực email";
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+        <div class="alert @(Model.Succeeded ? "alert-success" : "alert-warning") shadow-sm">
+            <h1 class="h4">Xác thực email</h1>
+            <p>@Model.Message</p>
+            @if (Model.Succeeded)
+            {
+                <a asp-action="Login" class="btn btn-primary">Đăng nhập</a>
+            }
+            else
+            {
+                <a asp-action="ResendConfirmationEmail" class="btn btn-primary">Gửi lại email xác thực</a>
+            }
+        </div>
+    </div>
+</div>

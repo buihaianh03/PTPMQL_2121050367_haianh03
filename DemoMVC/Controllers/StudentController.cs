@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using DemoMVC.Models;
 
 namespace DemoMVC.Controllers
 {
+    [AllowAnonymous]
     [Route("sinh-vien")]
     public class StudentController : Controller
     {
